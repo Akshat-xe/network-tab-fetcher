@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="hdr">
+    <div class="brand">
+      <span class="dot live" id="dot"></span>
+      <span class="name">Network Tab Fetcher</span>
+      <span class="ver">v2.0</span>
+    </div>
+    <div class="status-pill active" id="status">Active (Auto)</div>
+  </header>
+
+  <!-- Primary Download Action Section -->
+  <section class="download-hero">
+    <button id="dlZip" class="btn-hero">
+      <span class="hero-icon">⬇</span>
+      <div class="hero-text">
+        <span class="hero-title">Download All (Save As...)</span>
+        <span class="hero-sub" id="heroSub">Exports full categorized ZIP with bodies & HAR</span>
+      </div>
+    </button>
+    <div class="quick-formats">
+      <span class="quick-label">Or format:</span>
+      <button id="dlJson" class="btn-sm">JSON</button>
+      <button id="dlHar" class="btn-sm">HAR</button>
+      <button id="dlCsv" class="btn-sm">CSV</button>
+    </div>
+  </section>
+
+  <!-- Auto settings and controls -->
+  <section class="toggles-bar">
+    <label class="toggle-item" title="Automatically start capturing active tab when loaded">
+      <input type="checkbox" id="autoCaptureToggle" checked />
+      <span class="toggle-label">⚡ Always-On Auto Capture</span>
+    </label>
+    <label class="toggle-item" title="Automatically reset/delete captured logs when page is reloaded">
+      <input type="checkbox" id="autoClearToggle" checked />
+      <span class="toggle-label">🔄 Auto-Clear on Reload</span>
+    </label>
+  </section>
+
+  <!-- Live Stats and Category Grid -->
+  <section class="stats-overview">
+    <div class="stat-card">
+      <span class="lbl">Total Requests</span>
+      <span class="val" id="count">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="lbl">Elapsed</span>
+      <span class="val" id="timer">00:00</span>
+    </div>
+    <div class="stat-card">
+      <span class="lbl">Transferred</span>
+      <span class="val" id="bytes">0 B</span>
+    </div>
+  </section>
+
+  <!-- Category Filter Pills -->
+  <section class="categories-bar">
+    <button class="cat-pill active" data-cat="">All <b id="cAll">0</b></button>
+    <button class="cat-pill" data-cat="Fetch/XHR">Fetch/XHR <b id="cXhr">0</b></button>
+    <button class="cat-pill" data-cat="Media">Media <b id="cMedia">0</b></button>
+    <button class="cat-pill" data-cat="Document">Doc <b id="cDoc">0</b></button>
+    <button class="cat-pill" data-cat="JavaScript">JS <b id="cJs">0</b></button>
+    <button class="cat-pill" data-cat="CSS">CSS <b id="cCss">0</b></button>
+    <button class="cat-pill" data-cat="Image">Img <b id="cImg">0</b></button>
+    <button class="cat-pill" data-cat="WebSocket">Socket <b id="cWs">0</b></button>
+    <button class="cat-pill" data-cat="Font">Font <b id="cFont">0</b></button>
+    <button class="cat-pill" data-cat="Wasm">Wasm <b id="cWasm">0</b></button>
+    <button class="cat-pill" data-cat="Other">Other <b id="cOther">0</b></button>
+  </section>
+
+  <!-- Search & Filter Controls -->
+  <section class="filterbar">
+    <input id="filter" placeholder="Filter requests by URL, endpoint, method, status…" />
+    <button id="clearBtn" class="btn-clear" title="Clear recorded requests now">Clear</button>
+  </section>
+
+  <!-- Requests List -->
+  <section class="list" id="list"></section>
+
+  <footer class="ftr">
+    <div class="target-site">
+      <span class="tgt-lbl">Target:</span>
+      <span id="targetUrl" class="tgt-url">-</span>
+    </div>
+    <div class="ftr-links">
+      <a id="openPanel" href="#" class="link">DevTools Panel ↗</a>
+    </div>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
