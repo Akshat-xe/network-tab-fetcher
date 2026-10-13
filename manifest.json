@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Network Tab Fetcher",
+  "version": "1.0.0",
+  "description": "Real-time network traffic inspector, recorder, and exporter. Auto-captures requests, headers, bodies, media & WebSocket streams with one-click Save As download.",
+  "permissions": [
+    "debugger",
+    "storage",
+    "downloads",
+    "activeTab",
+    "tabs",
+    "cookies",
+    "offscreen",
+    "scripting",
+    "webNavigation",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Network Tab Fetcher",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "devtools_page": "devtools.html",
+  "minimum_chrome_version": "116"
+}
