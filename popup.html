@@ -8,50 +8,71 @@
   <header class="hdr">
     <div class="brand">
       <span class="dot live" id="dot"></span>
-      <span class="name">Network Tab Fetcher</span>
-      <span class="ver">v2.0</span>
+      <span class="name">Details of a Web Feature</span>
+      <span class="ver">v2.5</span>
     </div>
     <div class="status-pill active" id="status">Active (Auto)</div>
   </header>
 
-  <!-- Primary Download Action Section -->
+  <!-- Target active tab banner -->
+  <section class="target-banner">
+    <span class="target-dot"></span>
+    <span class="target-title" id="targetTitle">Active Tab</span>
+    <span class="target-url" id="targetUrl">-</span>
+  </section>
+
+  <!-- Main Hero Download Button -->
   <section class="download-hero">
-    <button id="dlZip" class="btn-hero">
+    <button id="dlAll" class="btn-hero" title="Download entire DevTools dump into an organized ZIP folder">
       <span class="hero-icon">⬇</span>
       <div class="hero-text">
-        <span class="hero-title">Download All (Save As...)</span>
-        <span class="hero-sub" id="heroSub">Exports full categorized ZIP with bodies & HAR</span>
+        <span class="hero-title">Download All (Complete DevTools Dump)</span>
+        <span class="hero-sub" id="heroSub">Saves Elements, Sources, Network, Memory & Console in a single ZIP</span>
       </div>
     </button>
-    <div class="quick-formats">
-      <span class="quick-label">Or format:</span>
-      <button id="dlJson" class="btn-sm">JSON</button>
-      <button id="dlHar" class="btn-sm">HAR</button>
-      <button id="dlCsv" class="btn-sm">CSV</button>
+  </section>
+
+  <!-- DevTools Tabs Download Bar -->
+  <section class="devtools-tabs-bar">
+    <div class="tabs-label">Download Specific DevTools Tabs:</div>
+    <div class="tabs-buttons">
+      <button id="dlNetwork" class="tab-btn" title="Download Network requests, payloads, HAR, and CSV">🌐 Network</button>
+      <button id="dlElements" class="tab-btn" title="Download rendered DOM HTML and element tree">📄 Elements</button>
+      <button id="dlSources" class="tab-btn" title="Download all captured JavaScript and CSS source files">💻 Sources</button>
+      <button id="dlMemory" class="tab-btn" title="Download LocalStorage, SessionStorage, Cookies, and Globals">🧠 Memory</button>
+      <button id="dlConsole" class="tab-btn" title="Download captured console logs and errors">📜 Console</button>
     </div>
   </section>
 
-  <!-- Auto settings and controls -->
+  <!-- Toggles Bar -->
   <section class="toggles-bar">
-    <label class="toggle-item" title="Automatically start capturing active tab when loaded">
+    <label class="toggle-item" title="Automatically attach and capture current tab">
       <input type="checkbox" id="autoCaptureToggle" checked />
-      <span class="toggle-label">⚡ Always-On Auto Capture</span>
+      <span>⚡ Auto-Capture</span>
     </label>
-    <label class="toggle-item" title="Automatically reset/delete captured logs when page is reloaded">
+    <label class="toggle-item" title="Automatically switch target when you switch browser tabs">
+      <input type="checkbox" id="autoSwitchToggle" checked />
+      <span>🎯 Auto-Switch Tab</span>
+    </label>
+    <label class="toggle-item" title="Automatically clean old logs on reload to prevent storage burn out">
       <input type="checkbox" id="autoClearToggle" checked />
-      <span class="toggle-label">🔄 Auto-Clear on Reload</span>
+      <span>🔄 Auto-Clear on Reload</span>
     </label>
   </section>
 
-  <!-- Live Stats and Category Grid -->
+  <!-- Stats Grid -->
   <section class="stats-overview">
     <div class="stat-card">
-      <span class="lbl">Total Requests</span>
-      <span class="val" id="count">0</span>
+      <span class="lbl">Network Requests</span>
+      <span class="val" id="netCount">0</span>
     </div>
     <div class="stat-card">
-      <span class="lbl">Elapsed</span>
-      <span class="val" id="timer">00:00</span>
+      <span class="lbl">Parsed Sources</span>
+      <span class="val" id="sourcesCount">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="lbl">Console Logs</span>
+      <span class="val" id="consoleCount">0</span>
     </div>
     <div class="stat-card">
       <span class="lbl">Transferred</span>
@@ -61,7 +82,7 @@
 
   <!-- Category Filter Pills -->
   <section class="categories-bar">
-    <button class="cat-pill active" data-cat="">All <b id="cAll">0</b></button>
+    <button class="cat-pill active" data-cat="">All</button>
     <button class="cat-pill" data-cat="Fetch/XHR">Fetch/XHR <b id="cXhr">0</b></button>
     <button class="cat-pill" data-cat="Media">Media <b id="cMedia">0</b></button>
     <button class="cat-pill" data-cat="Document">Doc <b id="cDoc">0</b></button>
@@ -69,28 +90,21 @@
     <button class="cat-pill" data-cat="CSS">CSS <b id="cCss">0</b></button>
     <button class="cat-pill" data-cat="Image">Img <b id="cImg">0</b></button>
     <button class="cat-pill" data-cat="WebSocket">Socket <b id="cWs">0</b></button>
-    <button class="cat-pill" data-cat="Font">Font <b id="cFont">0</b></button>
-    <button class="cat-pill" data-cat="Wasm">Wasm <b id="cWasm">0</b></button>
     <button class="cat-pill" data-cat="Other">Other <b id="cOther">0</b></button>
   </section>
 
-  <!-- Search & Filter Controls -->
+  <!-- Filter & Clear -->
   <section class="filterbar">
     <input id="filter" placeholder="Filter requests by URL, endpoint, method, status…" />
-    <button id="clearBtn" class="btn-clear" title="Clear recorded requests now">Clear</button>
+    <button id="clearBtn" class="btn-clear" title="Clear current logs to free storage">Clear</button>
   </section>
 
   <!-- Requests List -->
   <section class="list" id="list"></section>
 
   <footer class="ftr">
-    <div class="target-site">
-      <span class="tgt-lbl">Target:</span>
-      <span id="targetUrl" class="tgt-url">-</span>
-    </div>
-    <div class="ftr-links">
-      <a id="openPanel" href="#" class="link">DevTools Panel ↗</a>
-    </div>
+    <span class="ftr-hint">Inspect panel active • Storage auto-managed</span>
+    <a id="openPanel" href="#" class="link">DevTools View ↗</a>
   </footer>
 
   <script src="popup.js"></script>

@@ -1,6 +1,6 @@
-# Network Tab Fetcher
+# Details of a Web Feature
 
-A lightweight Chromium extension to inspect, record, and export live network requests, responses, media streams, and WebSockets.
+A comprehensive Chromium DevTools inspector and scraper to capture and export Network, Elements (DOM), Sources (JS/CSS), Memory & Storage, and Console logs into organized archives.
 
 ## Setup
 1. Open `chrome://extensions` or `brave://extensions`.
